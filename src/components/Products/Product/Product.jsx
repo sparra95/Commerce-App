@@ -8,8 +8,13 @@ const Product = ({ product, onAddToCart }) => {
 	
 	return (
 		<Card className={classes.root}>
+			
+			{/** Image */}
 			<CardMedia className={classes.media} image={product.image.url} title={product.name} />
+			
 			<CardContent>
+
+				{/** Name and price */}
 				<div className={classes.cardContent}>
 					<Typography variant="h5" gutterBottom>
 						{product.name}
@@ -18,8 +23,12 @@ const Product = ({ product, onAddToCart }) => {
 						{product.price.formatted_with_symbol}
 					</Typography>
 				</div>
+
+				{/** Description */}
 				<Typography dangerouslySetInnerHTML={{__html:product.description}} variant="body2" color="textSecondary" />
 			</CardContent>
+			
+			{/** Add to cart */}
 			<CardActions disableSpacing className={classes.cardActions}>
 				<IconButton aria-label="Add to Cart" onClick={() => onAddToCart(product.id, 1)}>
 					<AddShoppingCart />

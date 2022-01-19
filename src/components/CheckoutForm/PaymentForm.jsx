@@ -7,45 +7,40 @@ import Review from "./Review"
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
 
 const PaymentForm = ({ shippingData, checkoutToken, nextStep, backStep, onCaptureCheckout }) => {
+	
 	const handleSubmit = async (event, elements, stripe) => {
 		event.preventDefault()
 		
 		if (!stripe || !elements) return
 		
+		// Get Stripe elements
 		const cardElement = elements.getElement(CardElement)
-		
 		const { error, paymentMethod } = await stripe.createPaymentMethod({ type: "card", card: cardElement })
 		
-		if (error) {
-			console.log("ERROR CREATING PAYMENT METHOD: ")
-			console.log(error)
-		} else {
-			console.log("STRIPE PAYMENT METHOD: ")
-			console.log(paymentMethod)
-			const orderData = {
-				line_items: checkoutToken.live.line_items,
-				customer: { firstname: shippingData.firstName, lastname: shippingData.lastName, email: shippingData.email },
-				shipping: {
-					name: "Primary",
-					street: shippingData.address1,
-					town_city: shippingData.city,
-					county_state: shippingData.shippingSubdivision,
-					postal_zip_code: shippingData.zip,
-					country: shippingData.shippingCountry
-				},
-				fulfillment: { shipping_method: shippingData.shippingOption },
-				payment: {
-					gateway: "stripe",
-					stripe: {
-						payment_method_id: paymentMethod.id
-					}
-				}
+		if (error) return console.log(error)
+
+		// Prepare data for Strpe payment process
+		const orderData = {
+			line_items: checkoutToken.live.line_items,
+			customer: { firstname: shippingData.firstName, lastname: shippingData.lastName, email: shippingData.email },
+			shipping: {
+				name: "Primary",
+				street: shippingData.address1,
+				town_city: shippingData.city,
+				county_state: shippingData.shippingSubdivision,
+				postal_zip_code: shippingData.zip,
+				country: shippingData.shippingCountry
+			},
+			fulfillment: { shipping_method: shippingData.shippingOption },
+			payment: {
+				gateway: "stripe",
+				stripe: { payment_method_id: paymentMethod.id }
 			}
-			
-			onCaptureCheckout(checkoutToken.id, orderData)
-		
-			nextStep()
 		}
+		
+		onCaptureCheckout(checkoutToken.id, orderData)
+
+		nextStep()
 	}
 	
 	
@@ -55,11 +50,16 @@ const PaymentForm = ({ shippingData, checkoutToken, nextStep, backStep, onCaptur
 			<Divider />
 			<Typography variant="h6" gutterBottom style={{ margin: "20px 0" }}>Payment method</Typography>
 			<Elements stripe={stripePromise}>
+				
+				{/** Capture payment info */}
 				<ElementsConsumer>
 					{({ elements, stripe }) => (
 						<form onSubmit={(e) => handleSubmit(e, elements, stripe)}>
 							<CardElement />
+
 							<br /><br />
+
+							{/** Buttons */}
 							<div style={{ display: "flex", justifyContent: "space-between" }}>
 								<Button variant="outlined" onClick={backStep}>Back</Button>
 								<Button type="submit" variant="contained" disabled={!stripe} color="primary">

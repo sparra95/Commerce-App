@@ -16,7 +16,8 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
 	const navigate = useNavigate()
 	
 	useEffect(() => {
-		// Creating separate function to use "async" inside of useEffect()
+		
+		// Create separate async function to use inside of useEffect()
 		const generateToken = async () => {
 			try {
 				const token = await commerce.checkout.generateToken(cart.id, { type: "cart" })
@@ -31,18 +32,21 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
 		generateToken()
 	}, [cart])
 	
+	// Move between steps from Payment step
 	const nextStep = () => (setActiveStep((prevActiveStep) => prevActiveStep + 1))
 	const backStep = () => (setActiveStep((prevActiveStep) => prevActiveStep - 1))
 	
+	// Move to next step from Shipping info
 	const next = (data) => {
 		setShippingData(data)
 		
-		console.log("SHIPPING DATA: ")
-		console.log(data)
+		// console.log("SHIPPING DATA: ")
+		// console.log(data)
 		
 		nextStep()
 	}
 	
+	// Confirmation page
 	let Confirmation = () => order.customer? (
 		<>
 			<div>
@@ -70,11 +74,12 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
 	
 	return (
 		<>
-		<CssBaseline />
+			<CssBaseline />
 			<div className={classes.toolbar} />
 			<main className={classes.layout}>
 				<Paper className={classes.paper}>
 					<Typography variant="h4" align="center">Checkout</Typography>
+
 					<Stepper activeStep={activeStep} className={classes.stepper}>
 						{steps.map((step) => (
 							<Step key={step}>
@@ -82,7 +87,9 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
 							</Step>											
 						))}
 					</Stepper>
+					
 					{activeStep === steps.length ? <Confirmation /> : checkoutToken && <Form />}
+					
 				</Paper>
 			</main>
 		</>

@@ -3,22 +3,27 @@ import { Typography, List, ListItem, ListItemText } from "@material-ui/core"
 
 const Review = ({ checkoutToken }) => {
 	
-	console.log("CHECKOUT TOKEN:")
-	console.log(checkoutToken)
+	// console.log("CHECKOUT TOKEN:")
+	// console.log(checkoutToken)
 	return (
 		<>
 			<Typography variant="h6" gutterBottom>Order summary</Typography>
 			
 			<List disablePadding>
+
+				{/** Products to purchase */}
 				{checkoutToken.live.line_items.map((product) => (
 					<ListItem style={{padding: "10px 0"}} key={product.name}>
 						<ListItemText primary={product.name} secondary={`Quantity: ${product.quantity}`} />
 						<Typography variant="body2">{product.line_total.formatted_with_symbol}</Typography>
 					</ListItem>
 				))}
+
+				{/** Total */}
 				<ListItem style={{padding: "10px 0"}}>
 					<ListItemText primary="Total" />		
 				</ListItem>
+
 				<Typography variant="subtitle1" style={{fontWeight: "700"}}>
 					{checkoutToken.live.subtotal.formatted_with_symbol}
 				</Typography>

@@ -4,14 +4,12 @@ import { Products, Navbar, Cart, Checkout } from "./components"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
 //////////////////////////////
-// YT video timestamp: 3:10:51
-//////////////////////////////
-
-//////////////////////////////
 // TODO:
 // 1. Move commerce.js operations into a React Context, separate JSX file and remove prop drilling App > Cart > CartItem
 // 2. Find optimizations by reducing renders and using React.memo()
 // 3. Inside AddressForm.js , consider converting Select input fields into separate JSX components to clean up return statement (and practice!)
+// 4. Check useEffects for proper cleanup
+// 5. Display error messages from Stripe payments
 
 const App = () => {
 	const [products, setProducts] = useState([])
@@ -31,7 +29,7 @@ const App = () => {
 		setCart(await commerce.cart.retrieve())
 	}
 	
-	// Add item and quantity to cart 
+	// Add item to cart 
 	const handleAddToCart = async (productId, quantity) => {
 		const { cart } = await commerce.cart.add(productId, quantity)
 		
@@ -45,28 +43,30 @@ const App = () => {
 		setCart(cart)
 	}
 	
-	// Remove from cart
+	// Remove item from cart
 	const handleRemoveFromCart = async (productId) => {
 		const { cart } = await commerce.cart.remove(productId)
 		
 		setCart(cart)
 	}
 	
-	// Remove all from cart
+	// Remove all items from cart
 	const handleEmptyCart = async () => {
 		const { cart } = await commerce.cart.empty()
 		
 		setCart(cart)
 	}
 	
+	// Refresh cart
 	const refreshCart = async () => {
 		const newCart = await commerce.cart.refresh().then((cart) => console.log(cart))
 		
-		console.log("REFRESHED CART: ")
-		console.log(newCart)
+		// console.log("REFRESHED CART: ")
+		// console.log(newCart)
 		setCart(newCart)
 	}
 	
+	// Capture order, refresh cart
 	const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
 		try {
 			const incomingOrder = await commerce.checkout.capture(checkoutTokenId, newOrder)
@@ -86,8 +86,8 @@ const App = () => {
 		fetchCart()
 	}, [])
 	
-	console.log("CART: ")
-	console.log(cart)
+	// console.log("CART: ")
+	// console.log(cart)
 	
 	return (
 		<Router>
