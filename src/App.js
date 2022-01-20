@@ -3,14 +3,6 @@ import { commerce } from "./lib/commerce"
 import { Products, Navbar, Cart, Checkout } from "./components"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
-//////////////////////////////
-// TODO:
-// 1. Move commerce.js operations into a React Context, separate JSX file and remove prop drilling App > Cart > CartItem
-// 2. Find optimizations by reducing renders and using React.memo()
-// 3. Inside AddressForm.js , consider converting Select input fields into separate JSX components to clean up return statement (and practice!)
-// 4. Check useEffects for proper cleanup
-// 5. Display error messages from Stripe payments
-
 const App = () => {
 	const [products, setProducts] = useState([])
 	const [cart, setCart] = useState({})
@@ -61,8 +53,6 @@ const App = () => {
 	const refreshCart = async () => {
 		const newCart = await commerce.cart.refresh().then((cart) => console.log(cart))
 		
-		// console.log("REFRESHED CART: ")
-		// console.log(newCart)
 		setCart(newCart)
 	}
 	
@@ -85,9 +75,6 @@ const App = () => {
 		fetchProducts()
 		fetchCart()
 	}, [])
-	
-	// console.log("CART: ")
-	// console.log(cart)
 	
 	return (
 		<Router>

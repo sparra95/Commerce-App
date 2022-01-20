@@ -40,9 +40,6 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
 	const next = (data) => {
 		setShippingData(data)
 		
-		// console.log("SHIPPING DATA: ")
-		// console.log(data)
-		
 		nextStep()
 	}
 	

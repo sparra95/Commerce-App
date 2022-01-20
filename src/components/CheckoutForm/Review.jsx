@@ -3,8 +3,6 @@ import { Typography, List, ListItem, ListItemText } from "@material-ui/core"
 
 const Review = ({ checkoutToken }) => {
 	
-	// console.log("CHECKOUT TOKEN:")
-	// console.log(checkoutToken)
 	return (
 		<>
 			<Typography variant="h6" gutterBottom>Order summary</Typography>
