@@ -6,7 +6,7 @@ import CartItem from "./CartItem/CartItem"
 
 const Cart = ({ cart, handleUpdateCartQuantity, handleRemoveFromCart, handleEmptyCart }) => {
 	const classes = useStyles()
-	
+
 	const EmptyCart = () => (
 		<Typography variant="subtitle1">
 			You have no items in your shopping cart, <Link to="/" classname={classes.link}>start adding some!</Link>
@@ -19,11 +19,21 @@ const Cart = ({ cart, handleUpdateCartQuantity, handleRemoveFromCart, handleEmpt
 			<Grid container spacing={3}>
 				{cart.line_items.map((item) => (
 					<Grid item xs={12} sm={4} key={item.id}>
-						<CartItem item={item} onUpdateCartQuantity={handleUpdateCartQuantity} onRemoveFromCart={handleRemoveFromCart} />
+						<CartItem 
+							name={item.name}
+							id={item.id}
+							url={item.image.url}
+							price={item.line_total.formatted_with_symbol}
+							quantity={item.quantity}
+							onUpdateCartQuantity={handleUpdateCartQuantity} 
+							onRemoveFromCart={handleRemoveFromCart} 
+						/>
 					</Grid>
 				))}
 			</Grid>
+			
 			<br />
+
 			{/* Cart details */}
 			<div className={classes.cartDetails}>
 				<Typography variant="h4" gutterBottom>Subtotal: {cart.subtotal.formatted_with_symbol}</Typography>

@@ -16,20 +16,22 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
 	const navigate = useNavigate()
 	
 	useEffect(() => {
+		// If cart or cart.id is undefined, do not generate checkout token & return
+		if (!cart?.id) return 
 		
-		// Create separate async function to use inside of useEffect()
+		// Define new function (to allow async inside of useEffect())
 		const generateToken = async () => {
 			try {
 				const token = await commerce.checkout.generateToken(cart.id, { type: "cart" })
-				
 				setCheckoutToken(token)
+				
 			} catch (error) {
 				console.log(error)
 				navigate("/")
 			}
 		}
-		
 		generateToken()
+
 	}, [cart])
 	
 	// Move between steps from Payment step
@@ -39,7 +41,6 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
 	// Move to next step from Shipping info
 	const next = (data) => {
 		setShippingData(data)
-		
 		nextStep()
 	}
 	

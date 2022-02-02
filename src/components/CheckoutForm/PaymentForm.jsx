@@ -48,7 +48,10 @@ const PaymentForm = ({ shippingData, checkoutToken, nextStep, backStep, onCaptur
 		<>
 			<Review checkoutToken={checkoutToken} />
 			<Divider />
-			<Typography variant="h6" gutterBottom style={{ margin: "20px 0" }}>Payment method</Typography>
+			<Typography variant="h6" gutterBottom style={{ margin: "0" }}>Payment method</Typography>
+			<Typography variant="caption" gutterBottom style={{ color: "red", display: "block", marginBottom: "1rem" }}>
+				Payments are in Test Mode. Please use: 4242 4242 4242 4242 EXP 04/24 242 42424
+			</Typography>
 			<Elements stripe={stripePromise}>
 				
 				{/** Capture payment info */}

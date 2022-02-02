@@ -1,10 +1,12 @@
-import React from "react"
+import React, { memo } from "react"
 import { Card, CardMedia, CardContent, CardActions, Typography, IconButton } from "@material-ui/core"
 import { AddShoppingCart } from "@material-ui/icons"
 import useStyles from "./styles"
 
 const Product = ({ product, onAddToCart }) => {
 	const classes = useStyles()
+
+	console.log('rendering ', product.name)
 	
 	return (
 		<Card className={classes.root}>
@@ -38,4 +40,4 @@ const Product = ({ product, onAddToCart }) => {
 	)
 }
 
-export default Product
+export default memo(Product)

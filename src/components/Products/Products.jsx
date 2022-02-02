@@ -7,6 +7,8 @@ import useStyles from "./styles"
 const Products = ({ products, onAddToCart }) => {
 	const classes = useStyles()
 	
+	console.log('rendering Products Page')
+
 	return (
 		<main className={classes.content}>
 		<div className={classes.toolbar} />
@@ -21,4 +23,4 @@ const Products = ({ products, onAddToCart }) => {
 	)
 }
 
-export default Products
+export default React.memo(Products)

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react"
-import { InputLabel, Select, MenuItem, Button, Grid, Typography } from "@material-ui/core"
+import { Button, Grid, Typography } from "@material-ui/core"
 import { useForm, FormProvider } from "react-hook-form"
 import { Link } from "react-router-dom"
 import FormInput from "./FormInput"
+import FormSelect from "./FormSelect"
 
 import { commerce } from "../../lib/commerce"
 
@@ -82,30 +83,26 @@ const AddressForm = ({ checkoutToken, next }) => {
 						<FormInput name="zip" label="ZIP / Postal code" />
 
 						{/** Select country, subdivision, shipping options */}
-						<Grid item xs={12} sm={6}>
-							<InputLabel>Shipping Country</InputLabel>
-							<Select value={shippingCountry} fullWidth onChange={(e) => setShippingCountry(e.target.value)}>
-								{countries.map((country) => (
-									<MenuItem key={country.id } value={country.id}>{country.label}</MenuItem>
-								))}
-							</Select>
-						</Grid>
+						<FormSelect 
+							label={"Shipping Country"} 
+							currentValue={shippingCountry} 
+							selectOptions={countries} 
+							setValue={setShippingCountry} 
+						/>
 
-						<Grid item xs={12} sm={6}>
-							<InputLabel>Shipping Subdivision</InputLabel>
-							<Select value={shippingSubdivision} fullWidth onChange={(e) => setShippingSubdivision(e.target.value)}>
-								{subdivisions.map((subdivision) => (
-									<MenuItem key={subdivision.id } value={subdivision.id}>{subdivision.label}</MenuItem>
-								))}
-							</Select>
-						</Grid>
+						<FormSelect 
+							label={"Shipping Subdivision"} 
+							currentValue={shippingSubdivision} 
+							selectOptions={subdivisions} 
+							setValue={setShippingSubdivision} 
+						/>
 
-						<Grid item xs={12} sm={6}>
-							<InputLabel>Shipping Options</InputLabel>
-							<Select value={shippingOption} fullWidth onChange={(e) => setShippingOption(e.target.value)}>
-								{options.map((option) => (<MenuItem key={option.id} value={option.id}>{option.label}</MenuItem>))}
-							</Select>
-						</Grid>
+						<FormSelect 
+							label={"Shipping Options"} 
+							currentValue={shippingOption} 
+							selectOptions={options} 
+							setValue={setShippingOption} 
+						/>
 						
 					</Grid>
 
