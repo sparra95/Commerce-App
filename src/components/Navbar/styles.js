@@ -1,6 +1,7 @@
-import { makeStyles, fade } from '@material-ui/core/styles';
+import { makeStyles, alpha } from '@material-ui/core/styles';
 
 const drawerWidth = 0;
+const gradientDegree = 45;
 
 export default makeStyles((theme) => ({
   appBar: {
@@ -10,6 +11,27 @@ export default makeStyles((theme) => ({
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
     },
+    background: 'linear-gradient(333deg, #ff1b6b, #45caff)',
+    'background-size': '400% 400%',
+
+    '-webkit-animation': '$gradient-transition 8s ease-in-out infinite',
+    '-moz-animation': '$gradient-transition 8s ease-in-out infinite',
+    animation: '$gradient-transition 8s ease-in-out infinite',
+  },
+  '@-webkit-keyframes gradient-transition': {
+    '0%': {'background-position':'7% 0%'},
+    '50%': {'background-position':'94% 100%'},
+    '100%': {'background-position':'7% 0%'},
+  },
+  '@-moz-keyframes gradient-transition': {
+      '0%': {'background-position':'7% 0%'},
+      '50%': {'background-position':'94% 100%'},
+      '100%': {'background-position':'7% 0%'},
+  },
+  '@keyframes gradient-transition': {
+      '0%': {'background-position':'7% 0%'},
+      '50%': {'background-position':'94% 100%'},
+      '100%': {'background-position':'7% 0%'},
   },
   title: {
     flexGrow: 1,
@@ -32,9 +54,9 @@ export default makeStyles((theme) => ({
   search: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
     '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
